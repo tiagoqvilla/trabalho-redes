@@ -1,4 +1,5 @@
 var udp = require('dgram')
+const crypto = require('crypto')
 
 // --------------------creating a udp server --------------------
 
@@ -13,6 +14,11 @@ server.on('error', function (error) {
 
 // emits on new datagram msg
 server.on('message', function (msg, info) {
+  // Gera hash do buffer recebido
+  let hash = crypto.createHash('md5').update(Uint8Array.from(msg)).digest('hex')
+
+  console.log(`Hash do arquivo recebido: ${hash}`)
+
   console.log('Data received from client : ' + msg.toString())
   console.log(
     'Received %d bytes from %s:%d\n',
