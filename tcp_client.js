@@ -1,6 +1,7 @@
 //---------------------client----------------------
 var net = require('net')
 const fs = require('fs')
+const crypto = require('crypto')
 
 // creating a custom socket client and connecting it....
 var client = new net.Socket()
@@ -21,13 +22,21 @@ client.on('connect', async function () {
   console.log('Client is IP4/IP6 : ' + family)
 
   // const filePath = path.join(folderpath, filename);
-    
+
   // let fileContent = await fs.readFile(filePath);
   // writing data to server
-  const fileTeste = await fs.readFileSync("./testegrande.txt");
+  const fileTeste = await fs.readFileSync('./testegrande.txt')
   // console.log(fileTeste);
-  const message = new Buffer.from(fileTeste);
-  client.write(message);
+  const message = new Buffer.from(fileTeste)
+
+  // Gera hash do buffer enviado
+  let hash = crypto
+    .createHash('md5')
+    .update(Uint8Array.from(fileTeste))
+    .digest('hex')
+  console.log(`Hash do arquivo enviado: ${hash}`)
+
+  client.write(message)
   // client.write('hello from client')
 })
 

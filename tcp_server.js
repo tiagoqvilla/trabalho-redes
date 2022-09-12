@@ -1,5 +1,6 @@
 var net = require('net')
 var fs = require('fs')
+const crypto = require('crypto')
 
 // creates the server
 var server = net.createServer()
@@ -62,7 +63,16 @@ server.on('connection', function (socket) {
     var bwrite = socket.bytesWritten
     console.log('Bytes read : ' + bread)
     console.log('Bytes written : ' + bwrite)
-    fs.writeFileSync('./serverReceiveData.txt', data, 'utf-8');
+
+    // Gera hash do buffer recebido
+    let hash = crypto
+      .createHash('md5')
+      .update(Uint8Array.from(data))
+      .digest('hex')
+
+    console.log(`Hash do arquivo recebido: ${hash}`)
+
+    fs.writeFileSync('./serverReceiveData.txt', data, 'utf-8')
     console.log('Data sent to server : ' + data)
 
     //echo data
