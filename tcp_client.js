@@ -25,7 +25,7 @@ client.on('connect', async function () {
   const fileTeste = await fs.readFileSync('./testegrande.txt')
   // const fileTeste = await fs.readFileSync('./teste.txt')
 
-  const message = new Buffer.from(fileTeste)
+  const message = new Buffer.from(fileTeste).toString()
 
   // Gera hash do buffer enviado
   let hash = crypto

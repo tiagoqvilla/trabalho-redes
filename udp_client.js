@@ -1,48 +1,39 @@
 // -------------------- udp client ----------------
-var udp = require('dgram')
-var buffer = require('buffer')
+const udp = require('dgram')
+const fs = require('fs')
 const crypto = require('crypto')
 
-// creating a client socket
-var client = udp.createSocket('udp4')
+// cria socket do client
+let client = udp.createSocket('udp4')
 
-//buffer msg
-var data = Buffer.from('siddheshrane')
-
+// ao receber mensagem do servidor
 client.on('message', function (msg, info) {
-  console.log('Data received from server : ' + msg.toString())
+  console.log('Dados recebidos do servidor: ' + msg.toString())
   console.log(
-    'Received %d bytes from %s:%d\n',
+    'Recebidos %d bytes de %s:%d\n',
     msg.length,
     info.address,
     info.port
   )
 })
 
-//sending msg
+// envio de dados
+
+// const fileTeste = fs.readFileSync('./testegrande.txt')
+const fileTeste = fs.readFileSync('./teste.txt')
+let data = new Buffer.from(fileTeste)
+
 client.send(data, 2222, 'localhost', function (error) {
   if (error) {
     client.close()
   } else {
-    // Gera hash do buffer recebido
+    // Gera hash do buffer enviado
     let hash = crypto
       .createHash('md5')
       .update(Uint8Array.from(data))
       .digest('hex')
 
-    console.log(`Hash do arquivo recebido: ${hash}`)
-    console.log('Data sent !!!')
+    console.log(`Hash do arquivo enviado: ${hash}`)
+    console.log('Dados enviados')
   }
 })
-
-// var data1 = Buffer.from('hello')
-// var data2 = Buffer.from('world')
-
-// //sending multiple msg
-// client.send([data1, data2], 2222, 'localhost', function (error) {
-//   if (error) {
-//     client.close()
-//   } else {
-//     console.log('Data sent !!!')
-//   }
-// })
