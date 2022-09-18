@@ -22,8 +22,8 @@ client.on('connect', async function () {
   console.log('Client é IP4/IP6: ' + family)
 
   // escreve dados no servidor
-  const fileTeste = await fs.readFileSync('./testegrande.txt')
-  // const fileTeste = await fs.readFileSync('./teste.txt')
+  const fileTeste = await fs.readFileSync('./teste_10000bytes.txt')
+  // const fileTeste = await fs.readFileSync('./teste_1500bytes.txt')
 
   const message = new Buffer.from(fileTeste).toString()
 

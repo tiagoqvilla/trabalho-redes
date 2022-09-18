@@ -19,11 +19,11 @@ client.on('message', function (msg, info) {
 
 // envio de dados
 
-// const fileTeste = fs.readFileSync('./testegrande.txt')
-const fileTeste = fs.readFileSync('./teste.txt')
+// const fileTeste = fs.readFileSync('./teste_10000bytes.txt')
+const fileTeste = fs.readFileSync('./teste_1500bytes.txt')
 let data = new Buffer.from(fileTeste)
 
-client.send(data, 2222, 'localhost', function (error) {
+client.send(data, 8080, 'localhost', function (error) {
   if (error) {
     client.close()
   } else {

@@ -51,7 +51,7 @@ server.on('close', function () {
   console.log('Socket finalizado')
 })
 
-server.bind(2222)
+server.bind(8080)
 
 setTimeout(function () {
   server.close()
